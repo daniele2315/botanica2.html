@@ -1,33 +1,82 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Curiosidades Botânicas</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Curiosidades - Botânica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        header {
+            background: #388e3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #66bb6a;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        nav a:hover,
+        nav a.active {
+            background: #2e7d32;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        ul {
+            list-style: square inside;
+        }
+        footer {
+            background: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Curiosidades sobre Plantas</h1>
+        <h1>Botânica</h1>
         <nav>
             <a href="index.html">Início</a>
-            <a href="curiosidades.html">Curiosidades</a>
+            <a href="botanica.html">Botânica</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="curiosidades.html" class="active">Curiosidades</a>
             <a href="contato.html">Contato</a>
         </nav>
     </header>
 
     <main>
+        <h2>Curiosidades sobre Plantas</h2>
         <ul>
-            <li>Algumas plantas carnívoras conseguem "digerir" pequenos insetos.</li>
-            <li>O bambu é uma das plantas que mais cresce no mundo.</li>
-            <li>Existem mais de 390 mil espécies de plantas conhecidas.</li>
-            <li>As algas, embora aquáticas, também fazem parte do estudo da botânica.</li>
+            <li>A maior flor do mundo é a Rafflesia arnoldii, que pode chegar a 1 metro de diâmetro.</li>
+            <li>Algumas plantas carnívoras, como a Dionaea muscipula (Venus flytrap), capturam insetos para obter nutrientes.</li>
+            <li>As plantas produzem oxigênio através da fotossíntese, que é essencial para a vida na Terra.</li>
+            <li>Existem árvores que vivem por milhares de anos, como o pinheiro-bristlecone.</li>
+            <li>Algumas plantas conseguem se comunicar através de sinais químicos no solo.</li>
         </ul>
     </main>
 
     <footer>
-        <p>&copy; 2025 Botânica Viva</p>
+        <p>© 2025 Botânica - Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>
