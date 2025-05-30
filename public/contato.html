@@ -1,41 +1,110 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Contato</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contato - Botânica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        header {
+            background: #388e3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #66bb6a;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        nav a:hover,
+        nav a.active {
+            background: #2e7d32;
+        }
+        main {
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea {
+            padding: 8px;
+            border: 1px solid #2e7d32;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background: #388e3c;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 1em;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2e7d32;
+        }
+        footer {
+            background: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Fale Conosco</h1>
+        <h1>Botânica</h1>
         <nav>
             <a href="index.html">Início</a>
+            <a href="botanica.html">Botânica</a>
+            <a href="quiz.html">Quiz</a>
             <a href="curiosidades.html">Curiosidades</a>
-            <a href="tipos.html">Tipos</a>
-            <a href="fotossintese.html">Fotossíntese</a>
-            <a href="medicinais.html">Medicinais</a>
-            <a href="contato.html">Contato</a>
+            <a href="contato.html" class="active">Contato</a>
         </nav>
     </header>
 
     <main>
-        <form>
-            <label for="nome">Nome:</label><br>
-            <input type="text" id="nome" name="nome"><br><br>
+        <h2>Fale conosco</h2>
+        <form onsubmit="alert('Obrigado pelo contato!'); return false;">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required />
 
-            <label for="email">E-mail:</label><br>
-            <input type="email" id="email" name="email"><br><br>
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required />
 
-            <label for="mensagem">Mensagem:</label><br>
-            <textarea id="mensagem" name="mensagem" rows="5" cols="30"></textarea><br><br>
+            <label for="mensagem">Mensagem:</label>
+            <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
 
             <button type="submit">Enviar</button>
         </form>
     </main>
 
     <footer>
-        <p>&copy; 2025 Botânica Viva</p>
+        <p>© 2025 Botânica - Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>
