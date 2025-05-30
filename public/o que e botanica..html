@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Botânica Interativa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; padding: 0;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        header {
+            background: #388e3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #66bb6a;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background: #2e7d32;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .photo-gallery {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .photo-gallery img {
+            max-width: 280px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .photo-gallery img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Bem-vindo ao Mundo da Botânica!</h1>
+        <p>Explore plantas, flores e curiosidades da natureza!</p>
+    </header>
+    <nav>
+        <a href="botanica.html">O que é botânica?</a>
+        <a href="botanicos.html">Botânicos e suas biografias.</a>
+        <a href="curiosidades.html">Curiosidades.</a>
+        <a href="questionario.html">Questionário.</a>
+        <a href="flores-exoticas.html">Flores Exóticas.</a>
+    </nav>
+    <main>
+        <h2>Galeria de Plantas</h2>
+        <div class="photo-gallery">
+            <img src="https://i.pinimg.com/originals/c2/72/e8/c272e8906a3fb910a6346dbf3ca77114.jpg" alt="Ficus Benjamina" title="Ficus Benjamina" />
+            <img src="https://i.pinimg.com/736x/43/41/94/4341949a760b213c550d250aa69447d6.jpg" alt="Rosa" title="Rosa" />
+            <img src="https://i.pinimg.com/736x/41/9b/ab/419bab0b0243252c2f57cacc68e9b8be.jpg" alt="Mimosa Pudica" title="Mimosa Pudica" />
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
