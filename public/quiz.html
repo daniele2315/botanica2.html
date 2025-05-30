@@ -7,54 +7,72 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #e0f7e9;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .quiz-container {
-            background: #fff;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            box-shadow: 0 0 10px #ccc;
-        }
-
-        h1 {
-            text-align: center;
+            margin: 0; padding: 0;
+            background: #e8f5e9;
             color: #2e7d32;
         }
-
-        .pergunta {
-            margin-top: 20px;
-        }
-
-        .opcao {
-            margin: 10px 0;
-        }
-
-        .resultado {
-            font-weight: bold;
-            color: #2e7d32;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4caf50;
+        header {
+            background: #388e3c;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
         }
-
-        button:hover {
-            background-color: #388e3c;
+        nav {
+            background: #66bb6a;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background: #2e7d32;
+        }
+        main {
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        .photo-gallery {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .photo-gallery img {
+            max-width: 280px;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .photo-gallery img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background: #388e3c;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            margin-top: 30px;
         }
     </style>
+     <header>
+        <h1>quiz</h1>
+        <nav>
+           <a href="index.html">Início</a>
+            <a href="O que é Botânica.html">botanica</a>
+            <a href="quiz.html">quiz</a>
+            <a href="curiosidades.html">curiosidades</a>
+            <a href="contato.html">Contato</a>
+        </nav>
+    </header>
 </head>
 <body>
     <div class="quiz-container">
