@@ -1,150 +1,144 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Quiz de Botânica</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; padding: 0;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        header {
-            background: #388e3c;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: #66bb6a;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 10px 0;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background: #2e7d32;
-        }
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        .photo-gallery {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .photo-gallery img {
-            max-width: 280px;
-            border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .photo-gallery img:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            background: #388e3c;
-            color: white;
-            text-align: center;
-            padding: 12px;
-            margin-top: 30px;
-        }
-    </style>
-     <header>
-        <h1>quiz</h1>
-        <nav>
-           <a href="index.html">Início</a>
-            <a href="O que é Botânica.html">botanica</a>
-            <a href="quiz.html">quiz</a>
-            <a href="curiosidades.html">curiosidades</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz de Botânica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f8e9;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #33691e;
+    }
+    .question {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #aed581;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #9ccc65;
+    }
+    #feedback {
+      font-size: 2em;
+      margin: 20px;
+    }
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+    }
+    #final {
+      font-size: 1.4em;
+      margin-top: 40px;
+      color: #33691e;
+    }
+  </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <h1>Quiz de Botânica 🌱</h1>
-        <div id="quiz"></div>
-        <button onclick="verificarRespostas()">Enviar Respostas</button>
-        <div class="resultado" id="resultado"></div>
-    </div>
 
-    <script>
-        const perguntas = [
-            {
-                pergunta: "1. Qual é o processo pelo qual as plantas produzem seu próprio alimento?",
-                opcoes: ["Fotossíntese", "Respiração", "Glicólise", "Fermentação"],
-                resposta: 0
-            },
-            {
-                pergunta: "2. Qual parte da planta absorve água e nutrientes do solo?",
-                opcoes: ["Folha", "Caule", "Raiz", "Flor"],
-                resposta: 2
-            },
-            {
-                pergunta: "3. Qual gás é absorvido durante a fotossíntese?",
-                opcoes: ["Oxigênio", "Nitrogênio", "Gás carbônico", "Hidrogênio"],
-                resposta: 2
-            },
-            {
-                pergunta: "4. Que pigmento dá cor verde às plantas?",
-                opcoes: ["Carotenoide", "Xantofila", "Clorofila", "Antocianina"],
-                resposta: 2
-            },
-            {
-                pergunta: "5. Qual é a estrutura reprodutiva das angiospermas?",
-                opcoes: ["Raiz", "Flor", "Folha", "Semente"],
-                resposta: 1
-            }
-        ];
+  <h1>🌱 Quiz de Botânica 🌼</h1>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <div id="final"></div>
+  <canvas id="confetti-canvas"></canvas>
 
-        function montarQuiz() {
-            const quizDiv = document.getElementById("quiz");
-            perguntas.forEach((q, index) => {
-                const bloco = document.createElement("div");
-                bloco.classList.add("pergunta");
-                bloco.innerHTML = `<p>${q.pergunta}</p>`;
-                q.opcoes.forEach((opcao, i) => {
-                    bloco.innerHTML += `
-                        <label class="opcao">
-                            <input type="radio" name="pergunta${index}" value="${i}">
-                            ${opcao}
-                        </label><br>
-                    `;
-                });
-                quizDiv.appendChild(bloco);
-            });
-        }
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Qual parte da planta é responsável pela fotossíntese?",
+        opcoes: ["Raiz", "Caule", "Folha", "Flor"],
+        resposta: "Folha"
+      },
+      {
+        pergunta: "Como se chama o tecido que transporta a seiva bruta?",
+        opcoes: ["Xilema", "Floema", "Estômato", "Cloroplasto"],
+        resposta: "Xilema"
+      },
+      {
+        pergunta: "Qual é o nome do processo pelo qual a água evapora das folhas?",
+        opcoes: ["Evaporação", "Respiração", "Fotossíntese", "Transpiração"],
+        resposta: "Transpiração"
+      },
+      {
+        pergunta: "Que nome damos às plantas que vivem em ambientes secos?",
+        opcoes: ["Hidrófitas", "Mesófitas", "Xerófitas", "Epífitas"],
+        resposta: "Xerófitas"
+      }
+    ];
 
-        function verificarRespostas() {
-            let pontuacao = 0;
-            perguntas.forEach((q, index) => {
-                const respostas = document.getElementsByName(`pergunta${index}`);
-                respostas.forEach(r => {
-                    if (r.checked && parseInt(r.value) === q.resposta) {
-                        pontuacao++;
-                    }
-                });
-            });
-            const resultadoDiv = document.getElementById("resultado");
-            resultadoDiv.innerText = `Você acertou ${pontuacao} de ${perguntas.length} perguntas!`;
-        }
+    let indice = 0;
+    let acertos = 0;
 
-        montarQuiz();
-    </script>
+    function mostrarPergunta() {
+      const q = perguntas[indice];
+      document.getElementById("question").innerText = q.pergunta;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      q.opcoes.forEach(opcao => {
+        const btn = document.createElement("button");
+        btn.innerText = opcao;
+        btn.onclick = () => responder(opcao);
+        optionsDiv.appendChild(btn);
+      });
+
+      document.getElementById("feedback").innerText = "";
+    }
+
+    function responder(escolha) {
+      const correta = perguntas[indice].resposta;
+      const feedback = document.getElementById("feedback");
+
+      if (escolha === correta) {
+        acertos++;
+        feedback.innerText = "🎉 Acertou!";
+        soltarConfete();
+      } else {
+        feedback.innerText = "😢 Errado!";
+      }
+
+      indice++;
+      if (indice < perguntas.length) {
+        setTimeout(mostrarPergunta, 1200);
+      } else {
+        setTimeout(mostrarResultado, 1500);
+      }
+    }
+
+    function mostrarResultado() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("options").style.display = "none";
+      document.getElementById("feedback").style.display = "none";
+      document.getElementById("final").innerText = `Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿`;
+    }
+
+    function soltarConfete() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    mostrarPergunta();
+  </script>
 </body>
 </html>
-s
