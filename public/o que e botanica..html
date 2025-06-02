@@ -1,89 +1,163 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>O que é Botânica?</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; padding: 0;
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-        header {
-            background: #388e3c;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav {
-            background: #66bb6a;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 10px 0;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            padding: 8px 15px;
-            border-radius: 4px;
-        }
-        nav a:hover {
-            background: #2e7d32;
-        }
-        main {
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        .photo-gallery {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .photo-gallery img {
-            max-width: 280px;
-            border-radius: 8px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-        .photo-gallery img:hover {
-            transform: scale(1.05);
-        }
-        footer {
-            background: #388e3c;
-            color: white;
-            text-align: center;
-            padding: 12px;
-            margin-top: 30px;
-        }
-    </style>
-     <header>
-        <h1>botanica</h1>
-        <nav>
-           <a href="index.html">Início</a>
-            <a href="botanica.html">botanica</a>
-            <a href="quiz.html">quiz</a>
-            <a href="curiosidades.html">curiosidades</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Botânica Interativa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    header {
+      background: #388e3c;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: #66bb6a;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      padding: 10px 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 15px;
+      border-radius: 4px;
+    }
+
+    nav a:hover {
+      background: #2e7d32;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #intro {
+      font-size: 1.3em;
+      margin: 30px auto;
+      width: 80%;
+      min-height: 80px;
+    }
+
+    .emoji {
+      font-size: 2em;
+      margin: 10px;
+      animation: pulse 1s infinite alternate;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      background-color: #a5d6a7;
+      color: #1b5e20;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #81c784;
+    }
+
+    #curiosidade {
+      font-size: 1.1em;
+      margin-top: 30px;
+      color: #33691e;
+      min-height: 40px;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+
+    footer {
+      background: #388e3c;
+      color: white;
+      text-align: center;
+      padding: 12px;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>O que é Botânica?</h1>
-        <p>
-            A botânica é a ciência que estuda as plantas, incluindo sua estrutura, propriedades,
-            processos fisiológicos, classificação e distribuição. Ela abrange desde pequenas algas
-            até grandes árvores, investigando como as plantas crescem, se reproduzem e interagem com
-            o meio ambiente. A botânica é fundamental para áreas como agricultura, medicina e conservação ambiental.
-        </p>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Plantas_de_bosque.jpg" alt="Plantas em um bosque" />
-    </div>
+  <header>
+    <h1>Bem-vindo ao Mundo da Botânica!</h1>
+    <p>Explore plantas, flores e curiosidades da natureza!</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="botanica.html">Botânica</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="curiosidades.html">Curiosidades</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+
+  <main>
+    <h2>🌿 O que é Botânica? 🌸</h2>
+    <div class="emoji">🌱🌻🍃🌼🌾</div>
+
+    <div id="intro"></div>
+
+    <button onclick="mostrarCuriosidade()">🎲 Quero uma curiosidade!</button>
+
+    <div id="curiosidade"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Mundo da Botânica
+  </footer>
+
+  <script>
+    const texto = "Botânica é o ramo da Biologia que estuda as plantas! 🌿 Ela investiga como elas crescem, respiram, se reproduzem e até como se comunicam. É graças à botânica que sabemos como cultivar alimentos, preservar florestas e entender a natureza.";
+    
+    let i = 0;
+    function typeWriter() {
+      if (i < texto.length) {
+        document.getElementById("intro").innerHTML += texto.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+      }
+    }
+
+    const curiosidades = [
+      "🌻 O girassol gira para acompanhar o sol durante o dia!",
+      "🌵 Algumas plantas conseguem viver anos sem água, como os cactos!",
+      "🌿 As árvores se comunicam por sinais químicos através do solo!",
+      "🍌 O pé de banana é uma erva gigante, não uma árvore!",
+      "🌼 Existem plantas carnívoras que comem insetos!",
+      "🍄 Cogumelos fazem parte do Reino Fungi, não são plantas!",
+    ];
+
+    function mostrarCuriosidade() {
+      const random = Math.floor(Math.random() * curiosidades.length);
+      document.getElementById("curiosidade").innerText = curiosidades[random];
+    }
+
+    typeWriter();
+  </script>
 </body>
 </html>
