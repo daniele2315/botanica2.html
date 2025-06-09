@@ -1,141 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Curiosidades - Botânica</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-    header {
-      background: #388e3c;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    nav {
-      background: #66bb6a;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      padding: 10px 0;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      padding: 8px 15px;
-      border-radius: 4px;
-      transition: background-color 0.3s;
-    }
-    nav a:hover,
-    nav a.active {
-      background: #2e7d32;
-    }
-    main {
-      padding: 20px;
-      max-width: 700px;
-      margin: auto;
-      text-align: center;
-    }
-    #curiosidade-box {
-      background: #a5d6a7;
-      border-radius: 12px;
-      padding: 30px 20px;
-      font-size: 1.3em;
-      box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 25px;
-      transition: background-color 0.4s ease;
-    }
-    button {
-      background: #388e3c;
-      color: white;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 10px;
-      padding: 12px 30px;
-      cursor: pointer;
-      box-shadow: 0 3px 7px rgba(0,0,0,0.2);
-      transition: background-color 0.3s, transform 0.2s;
-    }
-    button:hover {
-      background: #2e7d32;
-      transform: scale(1.05);
-    }
-    footer {
-      background: #388e3c;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      margin-top: 30px;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Botânica Interativa</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Botânica</h1>
+    <header>
+        <h1>Bem-vindo ao Mundo da Botânica!</h1>
+        <p>Explore plantas, flores e curiosidades da natureza!</p>
+    </header>
+
     <nav>
-      <a href="index.html">Início</a>
-      <a href="o que e botanica..html">Botânica</a>
-      <a href="quiz.html">Quiz</a>
-      <a href="curiosidades.html" class="active">Curiosidades</a>
-      <a href="contato.html">Contato</a>
+        <a href="index.html">Início</a>
+        <a href="o-que-e-botanica.html">Botânica</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="curiosidades.html">Curiosidades</a>
+        <a href="contato.html">Contato</a>
     </nav>
-  </header>
 
-  <main>
-    <h2>Curiosidades sobre Plantas</h2>
+    <main>
+        <h2>Galeria de Plantas</h2>
+        <div class="photo-gallery">
+            <img src="https://i.pinimg.com/originals/c2/72/e8/c272e8906a3fb910a6346dbf3ca77114.jpg" alt="Ficus Benjamina" title="Ficus Benjamina" />
+            <img src="https://i.pinimg.com/736x/43/41/94/4341949a760b213c550d250aa69447d6.jpg" alt="Rosa" title="Rosa" />
+            <img src="https://i.pinimg.com/736x/41/9b/ab/419bab0b0243252c2f57cacc68e9b8be.jpg" alt="Mimosa Pudica" title="Mimosa Pudica" />
+        </div>
+    </main>
 
-    <div id="curiosidade-box">Clique no botão para ver uma curiosidade sobre plantas! 🌿</div>
-
-    <button onclick="novaCuriosidade()">Mostrar Curiosidade</button>
-  </main>
-
-  <footer>
-    <p>© 2025 Botânica - Todos os direitos reservados.</p>
-  </footer>
-
-  <script>
-    const curiosidades = [
-      "A maior flor do mundo é a Rafflesia arnoldii, que pode chegar a 1 metro de diâmetro. 🌺",
-      "Algumas plantas carnívoras, como a Dionaea muscipula (Venus flytrap), capturam insetos para obter nutrientes. 🪰",
-      "As plantas produzem oxigênio através da fotossíntese, que é essencial para a vida na Terra. 🍃",
-      "Existem árvores que vivem por milhares de anos, como o pinheiro-bristlecone. 🌲",
-      "Algumas plantas conseguem se comunicar através de sinais químicos no solo. 🌱",
-      "O bambu pode crescer até 91 cm em um único dia — é uma das plantas que mais crescem rápido! 🎋",
-      "As sequoias gigantes podem atingir mais de 100 metros de altura! 🌳",
-      "Algumas plantas como a mimosa-pudica fecham suas folhas ao toque! 🤚",
-    ];
-
-    let indexAtual = -1;
-
-    function novaCuriosidade() {
-      let curiosidadeBox = document.getElementById("curiosidade-box");
-
-    
-      let novoIndex;
-      do {
-        novoIndex = Math.floor(Math.random() * curiosidades.length);
-      } while (novoIndex === indexAtual);
-
-      indexAtual = novoIndex;
-
-
-      curiosidadeBox.style.opacity = 0;
-
-      setTimeout(() => {
-        curiosidadeBox.textContent = curiosidades[indexAtual];
-        curiosidadeBox.style.opacity = 1;
-      }, 300);
-    }
-  </script>
+    <footer>
+        <p>&copy; 2025 Botânica Interativa. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>
