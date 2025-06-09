@@ -1,68 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quiz de Botânica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f8e9;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #33691e;
+    }
+    .question {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #aed581;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #9ccc65;
+    }
+    #feedback {
+      font-size: 2em;
+      margin: 20px;
+    }
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 999;
+    }
+    #final {
+      font-size: 1.4em;
+      margin-top: 40px;
+      color: #33691e;
+    }
+  </style>
+</head>
+<body>
 
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f3cdd9;
-    color: #ff0357;
-}
+  <h1>🌱 Quiz de Botânica 🌼</h1>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div id="feedback"></div>
+  <div id="final"></div>
+  <canvas id="confetti-canvas"></canvas>
 
-header {
-    background: #388e3c;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const perguntas = [
+      {
+        pergunta: "Qual parte da planta é responsável pela fotossíntese?",
+        opcoes: ["Raiz", "Caule", "Folha", "Flor"],
+        resposta: "Folha"
+      },
+      {
+        pergunta: "Como se chama o tecido que transporta a seiva bruta?",
+        opcoes: ["Xilema", "Floema", "Estômato", "Cloroplasto"],
+        resposta: "Xilema"
+      },
+      {
+        pergunta: "Qual é o nome do processo pelo qual a água evapora das folhas?",
+        opcoes: ["Evaporação", "Respiração", "Fotossíntese", "Transpiração"],
+        resposta: "Transpiração"
+      },
+      {
+        pergunta: "Que nome damos às plantas que vivem em ambientes secos?",
+        opcoes: ["Hidrófitas", "Mesófitas", "Xerófitas", "Epífitas"],
+        resposta: "Xerófitas"
+      }
+    ];
 
-nav {
-    background: #66bb6a;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px 0;
-}
+    let indice = 0;
+    let acertos = 0;
 
-nav a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 8px 15px;
-    border-radius: 4px;
-}
+    function mostrarPergunta() {
+      const q = perguntas[indice];
+      document.getElementById("question").innerText = q.pergunta;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
 
-nav a:hover {
-    background: #2e7d32;
-}
+      q.opcoes.forEach(opcao => {
+        const btn = document.createElement("button");
+        btn.innerText = opcao;
+        btn.onclick = () => responder(opcao);
+        optionsDiv.appendChild(btn);
+      });
 
-main {
-    padding: 20px;
-    max-width: 900px;
-    margin: auto;
-}
+      document.getElementById("feedback").innerText = "";
+    }
 
-.photo-gallery {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+    function responder(escolha) {
+      const correta = perguntas[indice].resposta;
+      const feedback = document.getElementById("feedback");
 
-.photo-gallery img {
-    max-width: 280px;
-    border-radius: 8px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-}
+      if (escolha === correta) {
+        acertos++;
+        feedback.innerText = "🎉 Acertou!";
+        soltarConfete();
+      } else {
+        feedback.innerText = "😢 Errado!";
+      }
 
-.photo-gallery img:hover {
-    transform: scale(1.05);
-}
+      indice++;
+      if (indice < perguntas.length) {
+        setTimeout(mostrarPergunta, 1200);
+      } else {
+        setTimeout(mostrarResultado, 1500);
+      }
+    }
 
-footer {
-    background: #388e3c;
-    color: white;
-    text-align: center;
-    padding: 12px;
-    margin-top: 30px;
-}
+    function mostrarResultado() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("options").style.display = "none";
+      document.getElementById("feedback").style.display = "none";
+      document.getElementById("final").innerText = `Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿`;
+    }
+
+    function soltarConfete() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    mostrarPergunta();
+  </script>
+</body>
+</html>
