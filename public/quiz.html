@@ -4,49 +4,94 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Quiz de Botânica</title>
+  <link rel="stylesheet" type="text/css" href="styler.css">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f1f8e9;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f0f8;
+      color: #4a2433;
       text-align: center;
-      padding: 50px;
+      padding: 20px;
     }
     h1 {
-      color: #33691e;
+      font-size: 2.8em;
+      margin-bottom: 0.3em;
+      color: #d66c92;
+      user-select: none;
     }
     .question {
-      font-size: 1.4em;
-      margin-bottom: 20px;
+      font-size: 1.5em;
+      margin: 20px 0 15px;
+      min-height: 60px;
     }
     .options button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      font-size: 1em;
+      background-color: #d66c92;
       border: none;
+      color: white;
+      padding: 12px 20px;
+      margin: 8px;
       border-radius: 8px;
-      background-color: #aed581;
       cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s, transform 0.2s;
+      user-select: none;
+      box-shadow: 0 4px 8px rgba(214, 108, 146, 0.4);
+      min-width: 130px;
     }
     .options button:hover {
-      background-color: #9ccc65;
+      background-color: #8b3a61;
+      transform: scale(1.05);
     }
     #feedback {
-      font-size: 2em;
-      margin: 20px;
+      margin: 15px 0;
+      font-size: 1.3em;
+      min-height: 28px;
+      font-weight: bold;
+    }
+    #final {
+      font-size: 1.6em;
+      margin-top: 30px;
+      color: #8b3a61;
     }
     #confetti-canvas {
       position: fixed;
-      top: 0; left: 0;
+      pointer-events: none;
+      top: 0;
+      left: 0;
       width: 100vw;
       height: 100vh;
-      pointer-events: none;
-      z-index: 999;
+      z-index: 9999;
     }
-    #final {
-      font-size: 1.4em;
-      margin-top: 40px;
-      color: #33691e;
+    .score-bar {
+      margin: 15px auto;
+      width: 80%;
+      max-width: 400px;
+      background: #f2d7e6;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 20px;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: #d66c92;
+      width: 0%;
+      transition: width 0.6s ease-in-out;
+    }
+    .restart-btn {
+      background-color: #8b3a61;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      margin-top: 30px;
+      box-shadow: 0 5px 12px rgba(139, 58, 97, 0.6);
+      transition: background-color 0.3s;
+    }
+    .restart-btn:hover {
+      background-color: #d66c92;
+      color: #4a2433;
     }
   </style>
 </head>
@@ -56,6 +101,9 @@
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
   <div id="feedback"></div>
+  <div class="score-bar" id="score-bar" style="display:none;">
+    <div class="score-bar-fill" id="score-bar-fill"></div>
+  </div>
   <div id="final"></div>
   <canvas id="confetti-canvas"></canvas>
 
@@ -93,33 +141,44 @@
       const optionsDiv = document.getElementById("options");
       optionsDiv.innerHTML = "";
 
+      document.getElementById("score-bar").style.display = "block";
+      updateScoreBar();
+
       q.opcoes.forEach(opcao => {
         const btn = document.createElement("button");
         btn.innerText = opcao;
-        btn.onclick = () => responder(opcao);
+        btn.onclick = () => responder(opcao, btn);
         optionsDiv.appendChild(btn);
       });
 
       document.getElementById("feedback").innerText = "";
     }
 
-    function responder(escolha) {
+    function responder(escolha, botaoClicado) {
       const correta = perguntas[indice].resposta;
       const feedback = document.getElementById("feedback");
+      const buttons = document.querySelectorAll("#options button");
+
+      buttons.forEach(b => b.disabled = true);
 
       if (escolha === correta) {
         acertos++;
         feedback.innerText = "🎉 Acertou!";
+        botaoClicado.style.backgroundColor = "#4CAF50";
         soltarConfete();
       } else {
-        feedback.innerText = "😢 Errado!";
+        feedback.innerText = `😢 Errado! A resposta correta é: ${correta}`;
+        botaoClicado.style.backgroundColor = "#f44336";
+        buttons.forEach(b => {
+          if (b.innerText === correta) b.style.backgroundColor = "#4CAF50";
+        });
       }
 
       indice++;
       if (indice < perguntas.length) {
-        setTimeout(mostrarPergunta, 1200);
+        setTimeout(mostrarPergunta, 2000);
       } else {
-        setTimeout(mostrarResultado, 1500);
+        setTimeout(mostrarResultado, 2500);
       }
     }
 
@@ -127,15 +186,47 @@
       document.getElementById("question").style.display = "none";
       document.getElementById("options").style.display = "none";
       document.getElementById("feedback").style.display = "none";
-      document.getElementById("final").innerText = `Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿`;
+      document.getElementById("score-bar").style.display = "none";
+
+      const finalDiv = document.getElementById("final");
+      finalDiv.innerHTML = `<p>Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿</p>`;
+
+      let msg = "";
+      if(acertos === perguntas.length){
+        msg = "<p>Parabéns! Você é um verdadeiro expert em botânica! 🎉🌸</p>";
+        soltarConfete(300);
+      } else if(acertos >= perguntas.length / 2){
+        msg = "<p>Muito bom! Continue estudando para se tornar um expert! 🌱</p>";
+      } else {
+        msg = "<p>Que tal tentar de novo para melhorar? Você consegue! 💪</p>";
+      }
+
+      finalDiv.innerHTML += msg;
+      finalDiv.innerHTML += `<button class="restart-btn" onclick="reiniciarQuiz()">Jogar Novamente</button>`;
     }
 
-    function soltarConfete() {
+    function reiniciarQuiz() {
+      indice = 0;
+      acertos = 0;
+      document.getElementById("question").style.display = "block";
+      document.getElementById("options").style.display = "block";
+      document.getElementById("feedback").style.display = "block";
+      document.getElementById("final").innerHTML = "";
+      mostrarPergunta();
+    }
+
+    function soltarConfete(amount = 100) {
       confetti({
-        particleCount: 100,
+        particleCount: amount,
         spread: 70,
         origin: { y: 0.6 }
       });
+    }
+
+    function updateScoreBar() {
+      const fill = document.getElementById("score-bar-fill");
+      let progress = (indice / perguntas.length) * 100;
+      fill.style.width = progress + "%";
     }
 
     mostrarPergunta();
