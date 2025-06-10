@@ -1,162 +1,196 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Botânica Interativa</title>
-    <link rel="stylesheet" type="text/css" href="styler.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Curiosidades de Botânica</title>
+  <link rel="stylesheet" type="text/css" href="styler.css">
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Paleta de cores rosa */
+    :root {
+      --pink-dark: #8b3a61;
+      --pink-medium: #d66c92;
+      --pink-light: #f8dee8;
+      --text-dark: #4a2433;
+    }
+
+    /* Corpo da página */
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--pink-light);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header fixo */
+    header {
+      background-color: var(--pink-dark);
+      color: white;
+      text-align: center;
+      padding: 16px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1001;
+    }
+    header h1 {
+      font-size: 2.2em;
+      font-weight: bold;
+    }
+    header p {
+      font-size: 0.9em;
+      color: var(--pink-light);
+    }
+
+    /* Navegação fixa abaixo do header */
+    nav {
+      background-color: var(--pink-medium);
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      top: 88px; /* altura do header */
+      width: 100%;
+      z-index: 1000;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: var(--pink-dark);
+    }
+
+    /* Conteúdo principal com margem para não ficar atrás do header + nav */
+    main {
+      flex: 1;
+      padding: 20px;
+      text-align: center;
+      margin-top: 140px; /* espaço para header + nav fixos */
+    }
+
+    /* Botão divertido */
+    #new-fact-btn {
+      background-color: var(--pink-medium);
+      border: none;
+      color: white;
+      padding: 14px 28px;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 20px auto;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    #new-fact-btn:hover {
+      background-color: var(--pink-dark);
+      transform: scale(1.05);
+    }
+
+    /* Caixa do fato */
+    #fact-box {
+      background: white;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(139, 58, 97, 0.3);
+      font-size: 1.3em;
+      line-height: 1.4;
+      color: var(--pink-dark);
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s;
+    }
+
+    /* Rodapé */
+    footer {
+      margin-top: 50px;
+      font-size: 0.9em;
+      color: var(--pink-dark);
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 700px) {
+      nav {
+        flex-wrap: wrap;
+        top: 120px;
+      }
+      #fact-box {
+        font-size: 1.1em;
+        padding: 20px;
+        min-height: 100px;
+      }
+    }
+  </style>
 </head>
-<style>/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Barra superior - nome/logo */
-.topbar {
-  background-color: #2a4d14; /* verde mais escuro */
-  color: white;
-  font-size: 2.2em;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1001;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* Barra de navegação logo abaixo */
-nav {
-  display: flex;
-  justify-content: center;
-  background-color: #33691e;
-  padding: 12px 0;
-  position: fixed;
-  top: 70px; /* altura da topbar (aprox) */
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 20px;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-nav a:hover {
-  background-color: #aed581;
-  color: #33691e;
-}
-
-/* Corpo ajustado para não ficar atrás das barras fixas */
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f8e9;
-  color: #33691e;
-  padding: 140px 40px 60px; /* espaçamento top = topbar + navbar */
-  text-align: center;
-}
-
-/* Cabeçalho do conteúdo */
-header h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1.2em;
-  font-style: italic;
-  color: #567d46;
-  margin-bottom: 30px;
-}
-
-/* Título da galeria */
-main h2 {
-  font-size: 2em;
-  margin-bottom: 25px;
-}
-
-/* Galeria de imagens */
-.photo-gallery {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.photo-gallery img {
-  width: 280px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.photo-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-}
-
-/* Rodapé */
-footer {
-  margin-top: 50px;
-  color: #567d46;
-  font-size: 0.9em;
-}
-
-/* Responsividade */
-@media (max-width: 700px) {
-  nav {
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    margin: 8px 10px;
-  }
-
-  .photo-gallery img {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
 <body>
-    <header>
-        <h1>Bem-vindo ao Mundo da Botânica!</h1>
-        <p>Explore plantas, flores e curiosidades da natureza!</p>
-    </header>
+  <header>
+    <h1>Curiosidades de Botânica 🌿</h1>
+    <p>Descubra fatos incríveis sobre as plantas!</p>
+  </header>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="o que e botanica.html">Botânica</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="curiosidades.html" class="active">Curiosidades</a>
+    <a href="contato.html">Contato</a>
+  </nav>
 
-    <nav>
-        <a href="index.html">Início</a>
-        <a href="o que e botanica.html">Botânica</a>
-        <a href="quiz.html">Quiz</a>
-        <a href="curiosidades.html">Curiosidades</a>
-        <a href="contato.html">Contato</a>
-    </nav>
+  <main>
+    <button id="new-fact-btn">Mostrar Curiosidade 🌸</button>
+    <div id="fact-box">Clique no botão para ver uma curiosidade!</div>
+  </main>
 
-    <main>
-        <h2>Galeria de Plantas</h2>
-        <div class="photo-gallery">
-            <img src="https://i.pinimg.com/originals/c2/72/e8/c272e8906a3fb910a6346dbf3ca77114.jpg" alt="Ficus Benjamina" title="Ficus Benjamina" />
-            <img src="https://i.pinimg.com/736x/43/41/94/4341949a760b213c550d250aa69447d6.jpg" alt="Rosa" title="Rosa" />
-            <img src="https://i.pinimg.com/736x/41/9b/ab/419bab0b0243252c2f57cacc68e9b8be.jpg" alt="Mimosa Pudica" title="Mimosa Pudica" />
-        </div>
-    </main>
+  <footer>
+    &copy; 2025 Botânica Interativa
+  </footer>
 
-    <footer>
-        <p>&copy; 2025 Botânica Interativa. Todos os direitos reservados.</p>
-    </footer>
+  <script>
+    const curiosidades = [
+      "A planta mais velha do mundo tem mais de 9.500 anos — é um pinheiro chamado 'Methuselah'.",
+      "As plantas carnívoras como a 'Dionaea muscipula' (Vênus-papa-moscas) capturam insetos para obter nutrientes.",
+      "A 'Mimosa pudica' fecha suas folhas rapidamente quando tocada, um mecanismo de defesa.",
+      "As flores de cerejeira só duram cerca de duas semanas e são símbolos de beleza efêmera no Japão.",
+      "As plantas podem se comunicar entre si por meio de sinais químicos liberados pelas raízes.",
+      "O bambu pode crescer até 91 cm em apenas um dia, sendo uma das plantas de crescimento mais rápido.",
+      "As sequoias gigantes podem viver por mais de 3.000 anos e alcançar alturas acima de 90 metros.",
+      "Algumas plantas, como a orquídea, usam estratégias complexas para atrair polinizadores específicos.",
+      "A fotossíntese das plantas é a base da cadeia alimentar para quase toda a vida na Terra.",
+      "Algumas sementes podem ficar dormentes por décadas até encontrar condições ideais para germinar."
+    ];
+
+    const factBox = document.getElementById('fact-box');
+    const btn = document.getElementById('new-fact-btn');
+
+    btn.addEventListener('click', () => {
+      factBox.style.opacity = 0;
+      setTimeout(() => {
+        const randomFact = curiosidades[Math.floor(Math.random() * curiosidades.length)];
+        factBox.textContent = randomFact;
+        factBox.style.opacity = 1;
+      }, 400);
+    });
+  </script>
 </body>
 </html>
