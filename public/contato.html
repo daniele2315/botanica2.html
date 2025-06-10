@@ -1,166 +1,222 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contato - Botânica</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato - Botânica</title>
+  <link rel="stylesheet" type="text/css" href="styler.css">
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Paleta de cores */
+    :root {
+      --pink-dark: #8b3a61;
+      --pink-medium: #d66c92;
+      --pink-light: #f8dee8;
+      --text-dark: #4a2433;
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+      --max-width: 500px;
+      --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Corpo */
+    body {
+      font-family: var(--font-family);
+      background: var(--pink-light);
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Header fixo */
+    header {
+      background-color: var(--pink-dark);
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1001;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+    header h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+    }
+
+    /* Navegação fixa abaixo do header */
+    nav {
+      background-color: var(--pink-medium);
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      top: 72px; /* altura do header */
+      width: 100%;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      user-select: none;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 16px;
+      padding: 10px 18px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color var(--transition-speed);
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: var(--pink-dark);
+      box-shadow: 0 0 10px var(--pink-dark);
+    }
+
+    /* Conteúdo principal */
+    main {
+      flex: 1;
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+      margin-top: 120px; /* espaço para header + nav fixos */
+      max-width: var(--max-width);
+      margin-left: auto;
+      margin-right: auto;
+    }
+    main h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    /* Formulário */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: left;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      display: inline-block;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--pink-medium);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-family: var(--font-family);
+      transition: border-color var(--transition-speed);
+      resize: vertical;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--pink-dark);
+      box-shadow: 0 0 8px var(--pink-medium);
+    }
+
+    button[type="submit"] {
+      background-color: var(--pink-dark);
+      color: white;
+      border: none;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      align-self: center;
+      transition: background-color var(--transition-speed), transform 0.15s ease-in-out;
+      box-shadow: 0 5px 12px rgba(139, 58, 97, 0.6);
+      user-select: none;
+    }
+    button[type="submit"]:hover {
+      background-color: var(--pink-medium);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(214, 108, 146, 0.7);
+    }
+    button[type="submit"]:focus {
+      outline: none;
+      box-shadow: 0 0 12px 3px var(--pink-light);
+    }
+
+    /* Rodapé */
+    footer {
+      margin-top: auto;
+      font-size: 0.9rem;
+      color: var(--pink-dark);
+      text-align: center;
+      padding: 1rem 0;
+      user-select: none;
+    }
+
+    /* Responsividade */
+    @media (max-width: 700px) {
+      nav {
+        flex-wrap: wrap;
+        top: 72px;
+        padding: 0.5rem 0;
+      }
+      nav a {
+        margin: 6px 10px;
+        padding: 8px 14px;
+        font-size: 0.95rem;
+      }
+      main {
+        margin-top: 110px;
+        padding: 1.5rem 1rem 2rem;
+      }
+    }
+  </style>
 </head>
-<style>/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Barra superior - nome/logo */
-.topbar {
-  background-color: #2a4d14; /* verde mais escuro */
-  color: white;
-  font-size: 2.2em;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1001;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* Barra de navegação logo abaixo */
-nav {
-  display: flex;
-  justify-content: center;
-  background-color: #33691e;
-  padding: 12px 0;
-  position: fixed;
-  top: 70px; /* altura da topbar (aprox) */
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 20px;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-nav a:hover {
-  background-color: #aed581;
-  color: #33691e;
-}
-
-/* Corpo ajustado para não ficar atrás das barras fixas */
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f8e9;
-  color: #33691e;
-  padding: 140px 40px 60px; /* espaçamento top = topbar + navbar */
-  text-align: center;
-}
-
-/* Cabeçalho do conteúdo */
-header h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1.2em;
-  font-style: italic;
-  color: #567d46;
-  margin-bottom: 30px;
-}
-
-/* Título da galeria */
-main h2 {
-  font-size: 2em;
-  margin-bottom: 25px;
-}
-
-/* Galeria de imagens */
-.photo-gallery {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.photo-gallery img {
-  width: 280px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.photo-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-}
-
-/* Rodapé */
-footer {
-  margin-top: 50px;
-  color: #567d46;
-  font-size: 0.9em;
-}
-
-/* Responsividade */
-@media (max-width: 700px) {
-  nav {
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    margin: 8px 10px;
-  }
-
-  .photo-gallery img {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
 <body>
-    <header>
-        <h1>Botânica</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="o que e botanica..html">Botânica</a>
-            <a href="quiz.html">Quiz</a>
-            <a href="curiosidades.html">Curiosidades</a>
-            <a href="contato.html" class="active">Contato</a>
-        </nav>
-    </header>
+  <header>
+    <h1>Botânica</h1>
+    <nav>
+      <a href="index.html">Início</a>
+     <a href="o que e botanica.html">Botânica</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="curiosidades.html">Curiosidades</a>
+      <a href="contato.html" class="active" aria-current="page">Contato</a>
+    </nav>
+  </header>
 
-    <main>
-        <h2>Fale conosco</h2>
-        <form onsubmit="alert('Obrigado pelo contato!'); return false;">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" required />
+  <main>
+    <h2>Fale conosco</h2>
+    <form onsubmit="alert('Obrigado pelo contato!'); return false;" novalidate>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required autocomplete="name" placeholder="Seu nome completo" />
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required />
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required autocomplete="email" placeholder="seuemail@exemplo.com" />
 
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+      <label for="mensagem">Mensagem:</label>
+      <textarea id="mensagem" name="mensagem" rows="5" required placeholder="Escreva sua mensagem aqui..."></textarea>
 
-            <button type="submit">Enviar</button>
-        </form>
-    </main>
+      <button type="submit" aria-label="Enviar mensagem">Enviar</button>
+    </form>
+  </main>
 
-    <footer>
-        <p>© 2025 Botânica - Todos os direitos reservados.</p>
-    </footer>
+  <footer>
+    <p>© 2025 Botânica - Todos os direitos reservados.</p>
+  </footer>
 </body>
 </html>
