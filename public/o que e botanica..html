@@ -3,190 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Botânica Interativa</title>
+  <title>O que é Botânica?</title>
   <link rel="stylesheet" type="text/css" href="styler.css">
+  <style>
+    /* **SEU CSS ORIGINAL** */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --pink-dark:#8b3a61;
+      --pink-medium:#d66c92;
+      --pink-light:#f8dee8;
+      --text-dark:#4a2433;
+    }
+    body {
+      font-family:Arial, sans-serif;
+      background:var(--pink-light);
+      color:var(--text-dark);
+      display:flex;
+      flex-direction:column;
+      min-height:100vh;
+    }
+    header {
+      background-color:var(--pink-dark);
+      color:white;
+      text-align:center;
+      padding:16px 0;
+      position:fixed;
+      top:0; width:100%; z-index:1001;
+    }
+    header h1 { font-size:2.2em; font-weight:bold; }
+    header p { font-size:0.9em; color:var(--pink-light); }
+    nav {
+      background-color:var(--pink-medium);
+      display:flex;
+      justify-content:center;
+      position:fixed;
+      top:88px; width:100%; z-index:1000;
+    }
+    nav a {
+      color:white; text-decoration:none;
+      margin:0 15px; padding:8px 14px;
+      border-radius:6px; font-weight:600;
+      transition:background-color .3s;
+    }
+    nav a:hover, nav a.active { background-color:var(--pink-dark); }
+    main {
+      flex:1;
+      padding:20px;
+      text-align:center;
+      margin-top:140px;
+    }
+    section { margin-bottom:2em; }
+    section h2 { font-size:1.8em; margin-bottom:0.5em; }
+    section p { font-size:1em; line-height:1.5; max-width:700px; margin:0 auto; }
+    button.read-more {
+      background-color:var(--pink-medium);
+      color:white; border:none;
+      padding:10px 20px; font-size:1em;
+      border-radius:6px; cursor:pointer;
+      margin-top:10px;
+      transition:background-color .3s, transform .2s;
+    }
+    button.read-more:hover { background-color:var(--pink-dark); transform:scale(1.03); }
+    .hidden { max-height:0; overflow:hidden; transition:max-height .5s ease; }
+    .visible { max-height:1000px; transition:max-height .5s ease; }
+    .fact-card {
+      background:white; padding:20px; margin:1em auto;
+      border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1);
+      max-width:600px; font-size:1.1em;
+      color:var(--text-dark);
+      opacity:0; transition:opacity .5s;
+    }
+    .fact-card.show { opacity:1; }
+    footer {
+      margin-top:auto;
+      font-size:0.9em;
+      color:var(--pink-dark);
+      text-align:center;
+      padding:20px 0;
+    }
+    @media(max-width:700px){
+      nav { flex-wrap:wrap; top:120px; }
+      section p { padding:0 1em; }
+    }
+  </style>
 </head>
-<style>/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* Barra superior - nome/logo */
-.topbar {
-  background-color: #2a4d14; /* verde mais escuro */
-  color: white;
-  font-size: 2.2em;
-  font-weight: bold;
-  text-align: center;
-  padding: 20px 0;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1001;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-}
-
-/* Barra de navegação logo abaixo */
-nav {
-  display: flex;
-  justify-content: center;
-  background-color: #33691e;
-  padding: 12px 0;
-  position: fixed;
-  top: 70px; /* altura da topbar (aprox) */
-  width: 100%;
-  z-index: 1000;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-nav a {
-  color: white;
-  text-decoration: none;
-  margin: 0 20px;
-  font-size: 1em;
-  font-weight: 600;
-  padding: 6px 12px;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-nav a:hover {
-  background-color: #aed581;
-  color: #33691e;
-}
-
-/* Corpo ajustado para não ficar atrás das barras fixas */
-body {
-  font-family: Arial, sans-serif;
-  background: #f1f8e9;
-  color: #33691e;
-  padding: 140px 40px 60px; /* espaçamento top = topbar + navbar */
-  text-align: center;
-}
-
-/* Cabeçalho do conteúdo */
-header h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1.2em;
-  font-style: italic;
-  color: #567d46;
-  margin-bottom: 30px;
-}
-
-/* Título da galeria */
-main h2 {
-  font-size: 2em;
-  margin-bottom: 25px;
-}
-
-/* Galeria de imagens */
-.photo-gallery {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.photo-gallery img {
-  width: 280px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.photo-gallery img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-}
-
-/* Rodapé */
-footer {
-  margin-top: 50px;
-  color: #567d46;
-  font-size: 0.9em;
-}
-
-/* Responsividade */
-@media (max-width: 700px) {
-  nav {
-    flex-wrap: wrap;
-  }
-
-  nav a {
-    margin: 8px 10px;
-  }
-
-  .photo-gallery img {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
 <body>
+
   <header>
-    <h1>Bem-vindo ao Mundo da Botânica!</h1>
-    <p>Explore plantas, flores e curiosidades da natureza!</p>
+    <h1>Descubra a Botânica!</h1>
+    <p>Entenda as plantas de forma divertida e interativa 🌿</p>
   </header>
 
   <nav>
     <a href="index.html">Início</a>
-    <a href="o que e botanica.html">Botânica</a>
+    <a href="botanica.html" class="active">Botânica</a>
     <a href="quiz.html">Quiz</a>
     <a href="curiosidades.html">Curiosidades</a>
     <a href="contato.html">Contato</a>
   </nav>
 
   <main>
-    <h2>🌿 O que é Botânica? 🌸</h2>
-    <div class="emoji">🌱🌻🍃🌼🌾</div>
+    <section>
+      <h2>O que é Botânica?</h2>
+      <p>
+        A Botânica é a área da Biologia que estuda as plantas — sua estrutura, crescimento, reprodução e interação com o ambiente.
+      </p>
+      <div id="more-info" class="hidden">
+        <p>
+          Estuda também fungos e algas, mesmo não sendo plantas; está presente na agricultura, farmacologia, ecologia, paleobotânica e muito mais!
+        </p>
+      </div>
+      <button class="read-more" id="toggle-info">Leia Mais</button>
+    </section>
 
-    <div id="intro"></div>
-
-    <button onclick="mostrarCuriosidade()">🎲 Quero uma curiosidade!</button>
-
-    <div id="curiosidade"></div>
+    <section>
+      <h2>Área de estudo:</h2>
+      <div>
+        <button class="read-more" onclick="showFact(0)">Morfologia</button>
+        <button class="read-more" onclick="showFact(1)">Fisiologia</button>
+        <button class="read-more" onclick="showFact(2)">Ecologia Vegetal</button>
+      </div>
+      <div id="fact-container"></div>
+    </section>
   </main>
 
-  <footer>
-    &copy; 2025 Mundo da Botânica
-  </footer>
 
   <script>
-    const texto = "Botânica é o ramo da Biologia que estuda as plantas! 🌿 Ela investiga como elas crescem, respiram, se reproduzem e até como se comunicam. É graças à botânica que sabemos como cultivar alimentos, preservar florestas e entender a natureza.";
-    
-    let i = 0;
-    function typeWriter() {
-      if (i < texto.length) {
-        document.getElementById("intro").innerHTML += texto.charAt(i);
-        i++;
-        setTimeout(typeWriter, 40);
-      }
-    }
+    const moreInfo = document.getElementById('more-info');
+    const btnToggle = document.getElementById('toggle-info');
 
-    const curiosidades = [
-      "🌻 O girassol gira para acompanhar o sol durante o dia!",
-      "🌵 Algumas plantas conseguem viver anos sem água, como os cactos!",
-      "🌿 As árvores se comunicam por sinais químicos através do solo!",
-      "🍌 O pé de banana é uma erva gigante, não uma árvore!",
-      "🌼 Existem plantas carnívoras que comem insetos!",
-      "🍄 Cogumelos fazem parte do Reino Fungi, não são plantas!",
+    btnToggle.onclick = () => {
+      const showing = moreInfo.classList.toggle('visible');
+      moreInfo.classList.toggle('hidden');
+      btnToggle.textContent = showing ? 'Leia Menos' : 'Leia Mais';
+    };
+
+    const facts = [
+      "Morfologia estuda forma e estrutura das plantas (raízes, caule, folha).",
+      "Fisiologia analisa processos como fotossíntese e transporte de nutrientes.",
+      "Ecologia Vegetal investiga a interação das plantas com seu ambiente."
     ];
 
-    function mostrarCuriosidade() {
-      const random = Math.floor(Math.random() * curiosidades.length);
-      document.getElementById("curiosidade").innerText = curiosidades[random];
+    function showFact(i) {
+      const container = document.getElementById('fact-container');
+      container.innerHTML = `
+        <div class="fact-card show">
+          ${facts[i]}
+        </div>`;
     }
-
-    typeWriter();
   </script>
 </body>
 </html>
