@@ -1,144 +1,124 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Quiz de Botânica</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f1f8e9;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      color: #33691e;
-    }
-    .question {
-      font-size: 1.4em;
-      margin-bottom: 20px;
-    }
-    .options button {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 20px;
-      font-size: 1em;
-      border: none;
-      border-radius: 8px;
-      background-color: #aed581;
-      cursor: pointer;
-    }
-    .options button:hover {
-      background-color: #9ccc65;
-    }
-    #feedback {
-      font-size: 2em;
-      margin: 20px;
-    }
-    #confetti-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 999;
-    }
-    #final {
-      font-size: 1.4em;
-      margin-top: 40px;
-      color: #33691e;
-    }
-  </style>
-</head>
-<body>
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <h1>🌱 Quiz de Botânica 🌼</h1>
-  <div class="question" id="question"></div>
-  <div class="options" id="options"></div>
-  <div id="feedback"></div>
-  <div id="final"></div>
-  <canvas id="confetti-canvas"></canvas>
+/* Barra superior - nome/logo */
+.topbar {
+  background-color: #2a4d14; /* verde mais escuro */
+  color: white;
+  font-size: 2.2em;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1001;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script>
-    const perguntas = [
-      {
-        pergunta: "Qual parte da planta é responsável pela fotossíntese?",
-        opcoes: ["Raiz", "Caule", "Folha", "Flor"],
-        resposta: "Folha"
-      },
-      {
-        pergunta: "Como se chama o tecido que transporta a seiva bruta?",
-        opcoes: ["Xilema", "Floema", "Estômato", "Cloroplasto"],
-        resposta: "Xilema"
-      },
-      {
-        pergunta: "Qual é o nome do processo pelo qual a água evapora das folhas?",
-        opcoes: ["Evaporação", "Respiração", "Fotossíntese", "Transpiração"],
-        resposta: "Transpiração"
-      },
-      {
-        pergunta: "Que nome damos às plantas que vivem em ambientes secos?",
-        opcoes: ["Hidrófitas", "Mesófitas", "Xerófitas", "Epífitas"],
-        resposta: "Xerófitas"
-      }
-    ];
+/* Barra de navegação logo abaixo */
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: #33691e;
+  padding: 12px 0;
+  position: fixed;
+  top: 70px; /* altura da topbar (aprox) */
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
 
-    let indice = 0;
-    let acertos = 0;
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 20px;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-    function mostrarPergunta() {
-      const q = perguntas[indice];
-      document.getElementById("question").innerText = q.pergunta;
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
+nav a:hover {
+  background-color: #aed581;
+  color: #33691e;
+}
 
-      q.opcoes.forEach(opcao => {
-        const btn = document.createElement("button");
-        btn.innerText = opcao;
-        btn.onclick = () => responder(opcao);
-        optionsDiv.appendChild(btn);
-      });
+/* Corpo ajustado para não ficar atrás das barras fixas */
+body {
+  font-family: Arial, sans-serif;
+  background: #f1f8e9;
+  color: #33691e;
+  padding: 140px 40px 60px; /* espaçamento top = topbar + navbar */
+  text-align: center;
+}
 
-      document.getElementById("feedback").innerText = "";
-    }
+/* Cabeçalho do conteúdo */
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
 
-    function responder(escolha) {
-      const correta = perguntas[indice].resposta;
-      const feedback = document.getElementById("feedback");
+header p {
+  font-size: 1.2em;
+  font-style: italic;
+  color: #567d46;
+  margin-bottom: 30px;
+}
 
-      if (escolha === correta) {
-        acertos++;
-        feedback.innerText = "🎉 Acertou!";
-        soltarConfete();
-      } else {
-        feedback.innerText = "😢 Errado!";
-      }
+/* Título da galeria */
+main h2 {
+  font-size: 2em;
+  margin-bottom: 25px;
+}
 
-      indice++;
-      if (indice < perguntas.length) {
-        setTimeout(mostrarPergunta, 1200);
-      } else {
-        setTimeout(mostrarResultado, 1500);
-      }
-    }
+/* Galeria de imagens */
+.photo-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
 
-    function mostrarResultado() {
-      document.getElementById("question").style.display = "none";
-      document.getElementById("options").style.display = "none";
-      document.getElementById("feedback").style.display = "none";
-      document.getElementById("final").innerText = `Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿`;
-    }
+.photo-gallery img {
+  width: 280px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    function soltarConfete() {
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
-    }
+.photo-gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.25);
+}
 
-    mostrarPergunta();
-  </script>
-</body>
-</html>
+/* Rodapé */
+footer {
+  margin-top: 50px;
+  color: #567d46;
+  font-size: 0.9em;
+}
+
+/* Responsividade */
+@media (max-width: 700px) {
+  nav {
+    flex-wrap: wrap;
+  }
+
+  nav a {
+    margin: 8px 10px;
+  }
+
+  .photo-gallery img {
+    width: 100%;
+    height: auto;
+  }
+}
