@@ -1,3 +1,4 @@
+
 function mostrarAba(id) {
   const secoes = document.querySelectorAll("main section");
   secoes.forEach(sec => sec.classList.remove("active"));
