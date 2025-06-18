@@ -3,74 +3,163 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>O que é Botânica?</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+   <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Quiz de Botânica</title>
 </head>
 <body>
 
   <header>
-    <h1>Descubra a Botânica!</h1>
-    <p>Entenda as plantas de forma divertida e interativa 🌿</p>
+    <h1>🌱 Quiz de Botânica 🌼</h1>
+    <p>Teste seus conhecimentos sobre o mundo das plantas!</p>
   </header>
 
   <nav>
     <a href="index.html">Início</a>
-    <a href="o que e botanica..html" class="active">Botânica</a>
-    <a href="quiz.html">Quiz</a>
+    <a href="o que e botanica..html">Botânica</a>
+    <a href="quiz.html" class="active">Quiz</a>
     <a href="curiosidades.html">Curiosidades</a>
     <a href="contato.html">Contato</a>
   </nav>
 
   <main>
-    <section>
-      <h2>O que é Botânica?</h2>
-      <p>
-        A Botânica é a área da Biologia que estuda as plantas — sua estrutura, crescimento, reprodução e interação com o ambiente.
-      </p>
-      <div id="more-info" class="hidden">
-        <p>
-          Estuda também fungos e algas, mesmo não sendo plantas; está presente na agricultura, farmacologia, ecologia, paleobotânica e muito mais!
-        </p>
-      </div>
-      <button class="read-more" id="toggle-info">Leia Mais</button>
-    </section>
-
-    <section>
-      <h2>Área de estudo:</h2>
-      <div>
-        <button class="read-more" onclick="showFact(0)">Morfologia</button>
-        <button class="read-more" onclick="showFact(1)">Fisiologia</button>
-        <button class="read-more" onclick="showFact(2)">Ecologia Vegetal</button>
-      </div>
-      <div id="fact-container"></div>
-    </section>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="feedback"></div>
+    <div class="score-bar" id="score-bar" style="display:none;">
+      <div class="score-bar-fill" id="score-bar-fill"></div>
+    </div>
+    <div id="final"></div>
+    <canvas id="confetti-canvas"></canvas>
   </main>
 
+  <footer>
+    <p>&copy; 2025 Quiz de Botânica. Todos os direitos reservados.</p>
+  </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    const moreInfo = document.getElementById('more-info');
-    const btnToggle = document.getElementById('toggle-info');
-
-    btnToggle.onclick = () => {
-      const showing = moreInfo.classList.toggle('visible');
-      moreInfo.classList.toggle('hidden');
-      btnToggle.textContent = showing ? 'Leia Menos' : 'Leia Mais';
-    };
-
-    const facts = [
-      "Morfologia estuda forma e estrutura das plantas (raízes, caule, folha).",
-      "Fisiologia analisa processos como fotossíntese e transporte de nutrientes.",
-      "Ecologia Vegetal investiga a interação das plantas com seu ambiente."
+    const perguntas = [
+      {
+        pergunta: "Qual parte da planta é responsável pela fotossíntese?",
+        opcoes: ["Raiz", "Caule", "Folha", "Flor"],
+        resposta: "Folha"
+      },
+      {
+        pergunta: "Como se chama o tecido que transporta a seiva bruta?",
+        opcoes: ["Xilema", "Floema", "Estômato", "Cloroplasto"],
+        resposta: "Xilema"
+      },
+      {
+        pergunta: "Qual é o nome do processo pelo qual a água evapora das folhas?",
+        opcoes: ["Evaporação", "Respiração", "Fotossíntese", "Transpiração"],
+        resposta: "Transpiração"
+      },
+      {
+        pergunta: "Que nome damos às plantas que vivem em ambientes secos?",
+        opcoes: ["Hidrófitas", "Mesófitas", "Xerófitas", "Epífitas"],
+        resposta: "Xerófitas"
+      }
     ];
 
-    function showFact(i) {
-      const container = document.getElementById('fact-container');
-      container.innerHTML = `
-        <div class="fact-card show">
-          ${facts[i]}
-        </div>`;
+    let indice = 0;
+    let acertos = 0;
+
+    function mostrarPergunta() {
+      const q = perguntas[indice];
+      document.getElementById("question").innerText = q.pergunta;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      document.getElementById("score-bar").style.display = "block";
+      updateScoreBar();
+
+      q.opcoes.forEach(opcao => {
+        const btn = document.createElement("button");
+        btn.innerText = opcao;
+        btn.onclick = () => responder(opcao, btn);
+        optionsDiv.appendChild(btn);
+      });
+
+      document.getElementById("feedback").innerText = "";
     }
+
+    function responder(escolha, botaoClicado) {
+      const correta = perguntas[indice].resposta;
+      const feedback = document.getElementById("feedback");
+      const buttons = document.querySelectorAll("#options button");
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (escolha === correta) {
+        acertos++;
+        feedback.innerText = "🎉 Acertou!";
+        botaoClicado.style.backgroundColor = "#4CAF50";
+        soltarConfete();
+      } else {
+        feedback.innerText = `😢 Errado! A resposta correta é: ${correta}`;
+        botaoClicado.style.backgroundColor = "#f44336";
+        buttons.forEach(b => {
+          if (b.innerText === correta) b.style.backgroundColor = "#4CAF50";
+        });
+      }
+
+      indice++;
+      if (indice < perguntas.length) {
+        setTimeout(mostrarPergunta, 2000);
+      } else {
+        setTimeout(mostrarResultado, 2500);
+      }
+    }
+
+    function mostrarResultado() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("options").style.display = "none";
+      document.getElementById("feedback").style.display = "none";
+      document.getElementById("score-bar").style.display = "none";
+
+      const finalDiv = document.getElementById("final");
+      finalDiv.innerHTML = `<p>Você acertou ${acertos} de ${perguntas.length} perguntas! 🌿</p>`;
+
+      let msg = "";
+      if(acertos === perguntas.length){
+        msg = "<p>Parabéns! Você é um verdadeiro expert em botânica! 🎉🌸</p>";
+        soltarConfete(300);
+      } else if(acertos >= perguntas.length / 2){
+        msg = "<p>Muito bom! Continue estudando para se tornar um expert! 🌱</p>";
+      } else {
+        msg = "<p>Que tal tentar de novo para melhorar? Você consegue! 💪</p>";
+      }
+
+      finalDiv.innerHTML += msg;
+      finalDiv.innerHTML += `<button class="restart-btn" onclick="reiniciarQuiz()">Jogar Novamente</button>`;
+    }
+
+    function reiniciarQuiz() {
+      indice = 0;
+      acertos = 0;
+      document.getElementById("question").style.display = "block";
+      document.getElementById("options").style.display = "block";
+      document.getElementById("feedback").style.display = "block";
+      document.getElementById("final").innerHTML = "";
+      mostrarPergunta();
+    }
+
+    function soltarConfete(amount = 100) {
+      confetti({
+        particleCount: amount,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function updateScoreBar() {
+      const fill = document.getElementById("score-bar-fill");
+      let progress = (indice / perguntas.length) * 100;
+      fill.style.width = progress + "%";
+    }
+
+    mostrarPergunta();
   </script>
 </body>
 </html>
